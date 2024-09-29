@@ -1,0 +1,160 @@
+ScreenManager:
+    LoginScreen:
+    SignupScreen:
+    DashboardScreen:
+    CameraScreen:
+    ReceiveScreen:
+    QRScreen:
+
+<LoginScreen>:
+    name: 'login'
+    FloatLayout:
+        md_bg_color: 1, 1, 1, 1  # White background
+        MDLabel:
+            text: "Welcome Back"
+            halign: 'center'
+            theme_text_color: "Custom"
+            text_color: 0, 0, 0, 1  # Black
+            font_style: 'H4'
+            bold: True
+            pos_hint: {'center_y': 0.8}
+        MDTextField:
+            id: login_email
+            hint_text: "Email"
+            icon_right: "email"
+            mode: "rectangle"
+            size_hint_x: 0.9
+            pos_hint: {'center_x': 0.5,'center_y': 0.55}
+        MDTextField:
+            id: login_password
+            hint_text: "Password"
+            icon_right: "lock"
+            password: True
+            mode: "rectangle"
+            size_hint_x: 0.9
+            pos_hint: {'center_x': 0.5,'center_y': 0.45}
+        MDRaisedButton:
+            text: "Login"
+            pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+            size_hint_x: 0.9
+            on_release: app.animate_button(self)
+        MDTextButton:
+            text: "Don't have an account? Sign up"
+            pos_hint: {'center_x': 0.5, 'center_y': 0.2}
+            on_release:
+                root.manager.current = 'signup'
+
+<SignupScreen>:
+    name: 'signup'
+    FloatLayout:
+        md_bg_color: 1, 1, 1, 1
+        MDLabel:
+            text: "Create Account"
+            halign: 'center'
+            theme_text_color: "Custom"
+            text_color: 0, 0, 0, 1
+            font_style: 'H4'
+            bold: True
+            pos_hint: {'center_y': 0.8}
+        MDTextField:
+            id: signup_email
+            hint_text: "Email"
+            icon_right: "email"
+            mode: "rectangle"
+            size_hint_x: 0.9
+            pos_hint: {'center_x': 0.5,'center_y': 0.55}
+        MDTextField:
+            id: signup_password
+            hint_text: "Password"
+            icon_right: "lock"
+            password: True
+            mode: "rectangle"
+            size_hint_x: 0.9
+            pos_hint: {'center_x': 0.5,'center_y': 0.45}
+        MDRaisedButton:
+            text: "Sign Up"
+            pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+            size_hint_x: 0.9
+            on_release: app.animate_button(self)
+        MDIconButton:
+            icon: "arrow-left"
+            pos_hint: {"center_x": 0.1, "center_y": 0.95}
+            on_release:
+                root.manager.current = 'login'
+
+<DashboardScreen>:
+    name: 'dashboard'
+    FloatLayout:
+        MDLabel:
+            text: "Your Balance"
+            halign: 'center'
+            font_style: 'H4'
+            bold: True
+            pos_hint: {'center_y': 0.8}
+        MDLabel:
+            text: "$5000"
+            halign: 'center'
+            font_style: 'H3'
+            pos_hint: {'center_y': 0.6}
+        MDRaisedButton:
+            text: "Send"
+            size_hint_x: 0.9
+            pos_hint: {'center_x': 0.5, 'center_y': 0.2}
+            on_release: 
+                app.on_cam_click()
+                root.manager.current = 'camera'
+        MDIconButton:
+            icon: "logout"
+            pos_hint: {"center_x": 0.1, "center_y": 0.95}
+            on_release:
+                root.manager.current = 'login'
+        MDRaisedButton:
+            text: "Receive"
+            size_hint_x: 0.9
+            pos_hint: {'center_x': 0.5, 'center_y': 0.1}
+            on_release:
+                root.manager.current = 'receive'
+
+<ReceiveScreen>:
+    name: 'receive'
+    FloatLayout:
+        MDTextField:
+            id: amount
+            hint_text: "Amount to be received"
+            size_hint_x: 0.9
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+        MDRaisedButton:
+            text: "Confirm"
+            pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+            size_hint_x: 0.9
+            on_release:
+                app.generate_qr(amount.text)
+
+<QRScreen>:
+    name: 'qr'
+    FloatLayout:
+        Image:
+            id: qr_code_img
+            size_hint: 0.8, 0.8
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        MDRaisedButton:
+            text: "Back to Dashboard"
+            size_hint_x: 0.9
+            pos_hint: {'center_x': 0.5, 'center_y': 0.1}
+            on_release:
+                root.manager.current = 'dashboard'
+
+
+<CameraScreen>:
+    name: 'camera'
+    BoxLayout:
+        orientation: 'vertical'
+        Image:
+            id: img
+            source: ''
+            
+        MDIconButton:
+            icon: "arrow-left"
+            pos_hint: {"center_x": 0.1, "center_y": 0.95}
+            on_release:
+                root.manager.current = 'dashboard'
