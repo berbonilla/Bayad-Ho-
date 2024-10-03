@@ -1,0 +1,1 @@
+requirements = python3,kivy==2.3.0,docutils, pygments, pypiwin32, asynckivy, materialyoucolor, pillow, colorama, pypng, typing-extensions,numpy,kivymd==2.0.1, materialyoucolor, pillow,qrcode,opencv,imutils,base64
